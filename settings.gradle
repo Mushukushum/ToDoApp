@@ -3,12 +3,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
-<<<<<<< HEAD
+
 rootProject.name = "ToDoApp"
-=======
+
 rootProject.name = "ToDo App"
->>>>>>> 886d90b779502f0a4feebcd882c644f266d0df1d
+
 include ':app'
