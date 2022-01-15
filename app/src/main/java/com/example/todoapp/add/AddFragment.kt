@@ -45,7 +45,7 @@ class AddFragment : Fragment() {
     }
 
     private fun insertDataToDatabase() {
-        val mTitle = title_edit_text.toString()
+        val mTitle = title_edit_text.text.toString()
         val mPriority = priorities.selectedItem.toString()
         val mDescription = description_edit_text.text.toString()
 

@@ -2,6 +2,7 @@ package com.example.todoapp
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -21,8 +22,8 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
         ) {
             when(position){
                 0 -> {(parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.red))}
-                1 -> {(parent?.getChildAt(1) as TextView).setTextColor(ContextCompat.getColor(application, R.color.yellow))}
-                2 -> {(parent?.getChildAt(2) as TextView).setTextColor(ContextCompat.getColor(application, R.color.green))}
+                1 -> {(parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.yellow))}
+                2 -> {(parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.green))}
             }
         }
 
@@ -44,6 +45,14 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
             "Low Priority" -> {
                 Priority.LOW}
             else -> Priority.LOW
+        }
+    }
+
+    fun parsePriorityToInt(priority: Priority): Int {
+        return when(priority){
+            Priority.HIGH -> 0
+            Priority.MEDIUM -> 1
+            Priority.LOW -> 2
         }
     }
 }

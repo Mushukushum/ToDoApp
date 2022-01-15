@@ -13,4 +13,8 @@ class ToDoRepository(
     suspend fun insertData(toDoData: ToDoData){
         todoDao.insertData(toDoData)
     }
+
+    suspend fun updateData(toDoData: ToDoData){
+        todoDao.updateData(toDoData)
+    }
 }
