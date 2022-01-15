@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.iml
 .gradle
 .idea
@@ -19,3 +20,26 @@ local.properties
 =======
 local.properties
 >>>>>>> 886d90b779502f0a4feebcd882c644f266d0df1d
+=======
+*.iml
+.gradle
+.idea
+/.idea
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+<<<<<<< HEAD
+local.properties
+=======
+local.properties
+>>>>>>> 886d90b779502f0a4feebcd882c644f266d0df1d
+>>>>>>> 5bfe00c9cae3487429b27bd338388f5464f22556
