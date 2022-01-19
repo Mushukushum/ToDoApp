@@ -9,12 +9,18 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
+import com.example.todoapp.SharedViewModel
 import com.example.todoapp.data.viewmodel.ToDoViewModel
+import com.example.todoapp.databinding.FragmentListBinding
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
+    private val mSharedViewModel: SharedViewModel by viewModels()
+
+    private var _binding: FragmentListBinding? = null
+    private val binding get() = _binding!!
 
     private val adapter: ListAdapter by lazy { ListAdapter() }
 
@@ -23,24 +29,29 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        _binding = FragmentListBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.mSharedViewModel = mSharedViewModel
 
-        val view =  inflater.inflate(R.layout.fragment_list, container, false)
+        setupRecyclerView()
 
-        val recyclerView = view.recyclerView
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-
+        //Observe LiveData
         mToDoViewModel.getAllData.observe(viewLifecycleOwner, {
-                data -> adapter.setData(data)
+                data ->
+            mSharedViewModel.checkIfDatabaseEmpty(data)
+            adapter.setData(data)
         })
 
-        view.floatingActionButton.setOnClickListener{
-            findNavController().navigate(R.id.action_listFragment_to_addFragment)
-        }
-
+        //Set Menu
         setHasOptionsMenu(true)
 
-        return view
+        return binding.root
+    }
+
+    private fun setupRecyclerView() {
+        val recyclerView = binding.recyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireActivity())
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -56,13 +67,17 @@ class ListFragment : Fragment() {
 
     private fun confirmRemoval() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes"){_,_ ->
+        builder.setPositiveButton("Yes") { _ , _ ->
             mToDoViewModel.deleteAll()
         }
-        builder.setNegativeButton("No"){_,_ -> }
+        builder.setNegativeButton("No") { _ , _ -> }
         builder.setTitle("Delete everything?")
         builder.setMessage("Are you sure you want to remove everything?")
         builder.create().show()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
