@@ -1,17 +1,10 @@
-package com.example.todoapp.list
+package com.example.todoapp.list.adapter
 
-import android.inputmethodservice.Keyboard
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todoapp.R
-import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.databinding.RowLayoutBinding
-import kotlinx.android.synthetic.main.row_layout.view.*
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
 
@@ -23,7 +16,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
             binding.executePendingBindings()
         }
         companion object{
-            fun from(parent:ViewGroup): MyViewHolder{
+            fun from(parent:ViewGroup): MyViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = RowLayoutBinding.inflate(layoutInflater, parent, false)
                 return MyViewHolder(binding)
@@ -35,7 +28,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         return MyViewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder , position: Int) {
         val currentItem = dataList[position]
         holder.bind(currentItem)
     }
