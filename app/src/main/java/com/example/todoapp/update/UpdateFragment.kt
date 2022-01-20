@@ -14,8 +14,6 @@ import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
 import com.example.todoapp.databinding.FragmentUpdateBinding
-import kotlinx.android.synthetic.main.fragment_update.*
-import kotlinx.android.synthetic.main.fragment_update.view.*
 
 class UpdateFragment : Fragment() {
 
@@ -55,9 +53,9 @@ class UpdateFragment : Fragment() {
     }
 
     private fun updateItem() {
-        val title = current_title_edit_text.text.toString()
-        val description = current_description_edit_text.text.toString()
-        val getPriority = current_priorities.selectedItem.toString()
+        val title = binding.currentTitleEditText.text.toString()
+        val description = binding.currentDescriptionEditText.text.toString()
+        val getPriority = binding.currentPriorities.selectedItem.toString()
 
         val validation = mSharedViewModel.verifyDataFromUser(title, description)
         if(validation) {

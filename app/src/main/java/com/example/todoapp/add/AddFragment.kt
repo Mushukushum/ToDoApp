@@ -1,7 +1,6 @@
 package com.example.todoapp.add
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -9,28 +8,29 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
 import com.example.todoapp.SharedViewModel
-import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
-import kotlinx.android.synthetic.main.fragment_add.*
-import kotlinx.android.synthetic.main.fragment_add.view.*
+import com.example.todoapp.databinding.FragmentAddBinding
 
 class AddFragment : Fragment() {
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
 
+    private var _binding: FragmentAddBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view =  inflater.inflate(R.layout.fragment_add, container, false)
+    ): View {
+        _binding = FragmentAddBinding.inflate(layoutInflater, container, false)
 
         setHasOptionsMenu(true)
 
-        view.priorities.onItemSelectedListener = mSharedViewModel.listener
+        binding.priorities.onItemSelectedListener = mSharedViewModel.listener
 
-        return view
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -45,9 +45,9 @@ class AddFragment : Fragment() {
     }
 
     private fun insertDataToDatabase() {
-        val mTitle = title_edit_text.text.toString()
-        val mPriority = priorities.selectedItem.toString()
-        val mDescription = description_edit_text.text.toString()
+        val mTitle = binding.titleEditText.toString()
+        val mPriority = binding.priorities.selectedItem.toString()
+        val mDescription = binding.descriptionEditText.text.toString()
 
         val validation = mSharedViewModel.verifyDataFromUser(mTitle, mDescription)
         if(validation){
@@ -62,6 +62,11 @@ class AddFragment : Fragment() {
         }else{
             Toast.makeText(requireContext(), "Please, fill out all fields.", Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
